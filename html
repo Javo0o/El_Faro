@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>El Faro - Periódico Digital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:wght@300;400;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --negro: #111111;
+      --rojo: #C0392B;
+      --crema: #F5F0E8;
+      --gris-claro: #E8E2D5;
+      --gris-medio: #9E9E9E;
+      --blanco: #FFFFFF;
+      --acento: #1a3a5c;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Source Serif 4', serif;
+      background: var(--crema);
+      color: var(--negro);
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--negro);
+      color: var(--blanco);
+      text-align: center;
+      padding: 28px 20px 18px;
+      border-bottom: 4px solid var(--rojo);
+      position: relative;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 6px;
+    }
+
+    .logo-svg {
+      width: 64px;
+      height: 64px;
+      flex-shrink: 0;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      color: var(--blanco);
+    }
+
+    .header-tagline {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gris-medio);
+      margin-top: 4px;
+    }
+
+    .header-date {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      color: var(--gris-medio);
+      margin-top: 2px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--rojo);
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav a {
+      color: var(--blanco);
+      text-decoration: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      transition: background 0.2s;
+    }
+
+    nav a:hover, nav a.active {
+      background: rgba(0,0,0,0.25);
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      display: none;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+    }
+
+    section.visible { display: block; }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      border-bottom: 3px solid var(--rojo);
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+      color: var(--negro);
+    }
+
+    /* ── TABLA DE NOTICIAS ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--blanco);
+      margin-bottom: 40px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    thead {
+      background: var(--negro);
+      color: var(--blanco);
+    }
+
+    thead th {
+      padding: 14px 18px;
+      text-align: left;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--gris-claro);
+      transition: background 0.15s;
+    }
+
+    tbody tr:hover { background: #faf7f2; }
+
+    tbody td {
+      padding: 18px 18px;
+      vertical-align: top;
+    }
+
+    .noticia-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--negro);
+      margin-bottom: 4px;
+    }
+
+    .noticia-categoria {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--rojo);
+      color: var(--blanco);
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-bottom: 8px;
+    }
+
+    .noticia-texto {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: #444;
+    }
+
+    /* ── MEDIA ── */
+    .media-block {
+      background: var(--blanco);
+      border-radius: 4px;
+      padding: 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .media-block h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      margin-bottom: 14px;
+      color: var(--acento);
+    }
+
+    .media-block video,
+    .media-block audio {
+      width: 100%;
+      border-radius: 4px;
+    }
+
+    .video-shorts-wrapper {
+      display: flex;
+      justify-content: center;
+    }
+
+    .video-shorts-wrapper iframe {
+      width: 315px;
+      height: 560px;
+      border-radius: 4px;
+      border: none;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--negro);
+      color: var(--gris-medio);
+      text-align: center;
+      padding: 22px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+    }
+
+    footer span { color: var(--rojo); }
+  </style>
+</head>
+<body>
+
+<!-- HEADER / PORTADA -->
+<header>
+  <div class="header-top">
+    <!-- Logo SVG de faro -->
+    <svg class="logo-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="6" fill="#C0392B"/>
+      <!-- base del faro -->
+      <rect x="26" y="44" width="12" height="10" fill="#fff"/>
+      <!-- torre -->
+      <polygon points="32,10 25,44 39,44" fill="#fff"/>
+      <!-- linterna -->
+      <rect x="27" y="8" width="10" height="6" rx="2" fill="#FFD700"/>
+      <!-- rayos de luz -->
+      <line x1="32" y1="11" x2="10" y2="4" stroke="#FFD700" stroke-width="1.5" stroke-opacity="0.7"/>
+      <line x1="32" y1="11" x2="54" y2="4" stroke="#FFD700" stroke-width="1.5" stroke-opacity="0.7"/>
+      <line x1="32" y1="11" x2="6" y2="18" stroke="#FFD700" stroke-width="1" stroke-opacity="0.5"/>
+      <line x1="32" y1="11" x2="58" y2="18" stroke="#FFD700" stroke-width="1" stroke-opacity="0.5"/>
+    </svg>
+    <h1>El Faro</h1>
+  </div>
+  <p class="header-tagline">Periódico Digital · Iluminando la Verdad</p>
+  <p class="header-date" id="fecha-hoy"></p>
+</header>
+
+<!-- NAVEGACIÓN -->
+<nav>
+  <a href="#" class="active" onclick="mostrar('inicio', this)">Inicio</a>
+  <a href="#" onclick="mostrar('deporte', this)">Deporte</a>
+  <a href="#" onclick="mostrar('negocios', this)">Negocios</a>
+</nav>
+
+<!-- ════════════════ SECCIÓN INICIO ════════════════ -->
+<section id="inicio" class="visible">
+  <h2 class="section-title">Noticias Generales</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:30%">Título</th>
+        <th style="width:15%">Categoría</th>
+        <th>Texto del artículo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <p class="noticia-titulo">Nuevo Plan de Conectividad Digital llega a regiones extremas</p>
+        </td>
+        <td><span class="noticia-categoria">Nacional</span></td>
+        <td class="noticia-texto">
+          El Gobierno anunció hoy la expansión de fibra óptica hacia zonas rurales y localidades
+          aisladas del país. El plan beneficiará a más de 200 comunidades que actualmente no cuentan
+          con acceso a internet de banda ancha, permitiendo el acceso a educación, telemedicina y
+          comercio electrónico. La inversión estimada supera los 180 millones de dólares y se
+          implementará en tres etapas durante los próximos cuatro años.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p class="noticia-titulo">Temperatura récord en el norte del país: alerta por ola de calor</p>
+        </td>
+        <td><span class="noticia-categoria">Medio Ambiente</span></td>
+        <td class="noticia-texto">
+          La Dirección Meteorológica reportó temperaturas superiores a los 42 °C en la región de
+          Atacama, superando el récord histórico de la zona. Las autoridades emitieron una alerta
+          sanitaria y recomendaron evitar la exposición al sol entre las 11:00 y las 17:00 horas.
+          Organismos de salud pública reforzaron la distribución de agua potable en sectores
+          vulnerables y se habilitaron centros de hidratación en plazas y estadios municipales.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p class="noticia-titulo">Cumbre Iberoamericana de Educación define agenda 2025-2030</p>
+        </td>
+        <td><span class="noticia-categoria">Internacional</span></td>
+        <td class="noticia-texto">
+          Representantes de 22 países se reunieron en Cartagena de Indias para establecer los
+          lineamientos de la agenda educativa regional para los próximos cinco años. Entre los
+          acuerdos destacan la reducción del abandono escolar, la formación docente en competencias
+          digitales y el fomento de programas bilingües. Chile participó con una delegación del
+          Ministerio de Educación y presentó su modelo de aulas abiertas como caso de buenas
+          prácticas.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- VIDEO -->
+  <div class="media-block">
+    <h3>📹 Video Destacado — Resumen semanal de noticias</h3>
+
+    <div class="video-shorts-wrapper">
+      <iframe
+        src="https://www.youtube.com/embed/isShcBtlvtA"
+        title="Resumen semanal de noticias"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+  <!-- AUDIO -->
+  <div class="media-block">
+    <h3>🎙 Audio — Podcast El Faro: análisis de la semana</h3>
+
+    <iframe
+      src="https://open.spotify.com/embed/episode/6wuMo5CHnLDHUpDSR8XBsJ"
+      width="100%"
+      height="152"
+      frameborder="0"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy"
+      style="border-radius:12px;">
+    </iframe>
+  </div>
+</section>
+
+<!-- ════════════════ SECCIÓN DEPORTE ════════════════ -->
+<section id="deporte">
+  <h2 class="section-title">Deporte</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:30%">Título</th>
+        <th style="width:15%">Categoría</th>
+        <th>Texto del artículo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <p class="noticia-titulo">La Roja golea a Bolivia y lidera el grupo en la Copa América Sub-20</p>
+        </td>
+        <td><span class="noticia-categoria">Fútbol</span></td>
+        <td class="noticia-texto">
+          La selección chilena sub-20 derrotó por 3-0 a Bolivia en el estadio Monumental de Buenos
+          Aires, en un partido que demostró el nivel que alcanzó el proceso de Nicolás Córdova.
+          Los goles fueron anotados por Bastián Tapia (11'), Ignacio Mena (58') y Rodrigo Echeverría
+          (82'). Con este resultado, Chile suma 9 puntos en el Grupo B y asegura su clasificación
+          a la fase final del torneo continental.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p class="noticia-titulo">Kristel Köbrich rompe récord nacional en el Campeonato Panamericano de natación</p>
+        </td>
+        <td><span class="noticia-categoria">Natación</span></td>
+        <td class="noticia-texto">
+          La nadadora chilena Kristel Köbrich estableció una nueva marca nacional en los 800 metros
+          libres durante el Campeonato Panamericano celebrado en Lima. Con un tiempo de 8:25.43,
+          Köbrich superó su propio récord anterior e impresionó al cuerpo técnico de la selección.
+          La deportista, de 39 años, sigue demostrando que la experiencia y la constancia son sus
+          mayores fortalezas camino a los próximos Juegos Olímpicos.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p class="noticia-titulo">Nicolás Jarry avanza a cuartos de final en el ATP 500 de Barcelona</p>
+        </td>
+        <td><span class="noticia-categoria">Tenis</span></td>
+        <td class="noticia-texto">
+          El tenista chileno Nicolás Jarry venció al español Carlos Alcaraz en tres sets (6-4, 3-6, 7-5)
+          en una de las grandes sorpresas del torneo barcelonés. Jarry, actualmente ubicado en el
+          puesto 25 del ranking ATP, mostró un saque sólido y gran solidez de fondo de cancha.
+          En los cuartos de final se enfrentará al noruego Casper Ruud, segunda semilla del torneo.
+          El partido se disputará el próximo jueves en la cancha central del Real Club de Tenis
+          Barcelona.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ════════════════ SECCIÓN NEGOCIOS ════════════════ -->
+<section id="negocios">
+  <h2 class="section-title">Negocios &amp; Emprendimiento</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:30%">Título</th>
+        <th style="width:15%">Categoría</th>
+        <th>Texto del artículo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <p class="noticia-titulo">Startup chilena de energía solar recauda US$12 millones en ronda Serie A</p>
+        </td>
+        <td><span class="noticia-categoria">Emprendimiento</span></td>
+        <td class="noticia-texto">
+          SolarChile, empresa fundada en Concepción en 2021, cerró exitosamente su ronda de
+          financiamiento Serie A con una inversión de 12 millones de dólares liderada por fondos
+          de capital de riesgo de Brasil y España. La compañía desarrolla paneles solares de bajo
+          costo diseñados para comunidades rurales sin acceso a la red eléctrica. Con este capital,
+          planea expandir operaciones a Perú, Bolivia y Ecuador durante el próximo año, generando
+          más de 200 empleos directos en la región.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p class="noticia-titulo">Retail nacional acelera su transformación digital con inteligencia artificial</p>
+        </td>
+        <td><span class="noticia-categoria">Tecnología</span></td>
+        <td class="noticia-texto">
+          Las principales cadenas de supermercados y tiendas por departamento del país están
+          implementando sistemas de IA para optimizar inventarios, personalizar ofertas y reducir
+          mermas. Según un informe de la Cámara de Comercio de Santiago, el 68% de las empresas
+          retail con más de 100 empleados ya cuenta con algún piloto de automatización inteligente.
+          Los expertos proyectan que esta tendencia generará un ahorro operacional promedio del 18%
+          en los próximos tres años.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p class="noticia-titulo">Exportaciones de vino chileno crecen 14% en el primer trimestre del año</p>
+        </td>
+        <td><span class="noticia-categoria">Exportaciones</span></td>
+        <td class="noticia-texto">
+          Según cifras de Wines of Chile, las exportaciones del sector vitivinícola crecieron un 14%
+          en valor durante el primer trimestre, impulsadas principalmente por la demanda de Estados
+          Unidos, China y Alemania. Los vinos premium y ultrapremium lideraron el crecimiento,
+          reflejando un cambio en la estrategia de las viñas hacia segmentos de mayor valor agregado.
+          El Valle Central y la región del Maule concentran el 70% del volumen exportado,
+          consolidando a Chile como el quinto mayor exportador de vino del mundo.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  &copy; 2025 <span>El Faro</span> &mdash; Todos los derechos reservados &mdash; Periódico Digital
+</footer>
+
+<script>
+  // Fecha actual en header
+  const meses = ['enero','febrero','marzo','abril','mayo','junio',
+                  'julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const hoy = new Date();
+  document.getElementById('fecha-hoy').textContent =
+    hoy.getDate() + ' de ' + meses[hoy.getMonth()] + ' de ' + hoy.getFullYear();
+
+  // Navegación SPA simple
+  function mostrar(id, enlace) {
+    // ocultar todas
+    document.querySelectorAll('section').forEach(s => s.classList.remove('visible'));
+    // mostrar la elegida
+    document.getElementById(id).classList.add('visible');
+    // marcar enlace activo
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    if (enlace) enlace.classList.add('active');
+    // prevenir navegación del href="#"
+    return false;
+  }
+</script>
+
+</body>
+</html>
