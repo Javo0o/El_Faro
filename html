@@ -82,6 +82,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
+      flex-wrap: wrap; /* Mejora responsiva en nav */
     }
 
     nav a {
@@ -106,6 +107,12 @@
       max-width: 1100px;
       margin: 0 auto;
       padding: 40px 24px 60px;
+      animation: fadeIn 0.4s ease-in-out; /* Suavidad al cambiar de pestaña */
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     section.visible { display: block; }
@@ -120,88 +127,132 @@
       color: var(--negro);
     }
 
-    /* ── TABLA DE NOTICIAS ── */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--blanco);
+    /* ── MEJORA 1: GRID DE NOTICIAS (Reemplaza a la tabla) ── */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
       margin-bottom: 40px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     }
 
-    thead {
-      background: var(--negro);
-      color: var(--blanco);
+    .news-card {
+      background: var(--blanco);
+      border-top: 4px solid var(--rojo);
+      border-radius: 6px;
+      padding: 24px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    thead th {
-      padding: 14px 18px;
-      text-align: left;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.78rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    tbody tr {
-      border-bottom: 1px solid var(--gris-claro);
-      transition: background 0.15s;
-    }
-
-    tbody tr:hover { background: #faf7f2; }
-
-    tbody td {
-      padding: 18px 18px;
-      vertical-align: top;
-    }
-
-    .noticia-titulo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--negro);
-      margin-bottom: 4px;
+    .news-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
     }
 
     .noticia-categoria {
       display: inline-block;
+      align-self: flex-start;
       font-family: 'DM Sans', sans-serif;
       font-size: 0.68rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       background: var(--rojo);
       color: var(--blanco);
-      padding: 2px 8px;
-      border-radius: 2px;
-      margin-bottom: 8px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+
+    .noticia-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--negro);
+      margin-bottom: 12px;
+      line-height: 1.2;
     }
 
     .noticia-texto {
-      font-size: 0.9rem;
-      line-height: 1.65;
+      font-size: 0.95rem;
+      line-height: 1.6;
       color: #444;
+      margin-bottom: 20px;
+      flex-grow: 1; /* Empuja los comentarios hacia abajo */
+    }
+
+    /* ── MEJORA 2: SECCIÓN DE COMENTARIOS COLAPSABLES ── */
+    .comentarios-section {
+      border-top: 1px solid var(--gris-claro);
+      padding-top: 15px;
+      margin-top: auto;
+    }
+
+    .comentarios-section summary {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--acento);
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.2s;
+    }
+
+    .comentarios-section summary:hover {
+      color: var(--rojo);
+    }
+
+    .comentario-item {
+      background: var(--crema);
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 12px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .comentario-item strong {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--negro);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .add-comment-btn {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 16px;
+      background: var(--gris-claro);
+      color: var(--negro);
+      border: none;
+      border-radius: 4px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .add-comment-btn:hover {
+      background: #dcd6c7;
     }
 
     /* ── MEDIA ── */
     .media-block {
       background: var(--blanco);
-      border-radius: 4px;
+      border-radius: 6px;
       padding: 24px;
       margin-bottom: 28px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
 
     .media-block h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      margin-bottom: 14px;
+      font-size: 1.2rem;
+      margin-bottom: 16px;
       color: var(--acento);
-    }
-
-    .media-block video,
-    .media-block audio {
-      width: 100%;
-      border-radius: 4px;
+      border-left: 4px solid var(--rojo);
+      padding-left: 12px;
     }
 
     .video-shorts-wrapper {
@@ -210,9 +261,10 @@
     }
 
     .video-shorts-wrapper iframe {
-      width: 315px;
-      height: 560px;
-      border-radius: 4px;
+      width: 100%;
+      max-width: 560px;
+      height: 315px; /* Ajustado para formato estándar apaisado de noticias */
+      border-radius: 6px;
       border: none;
     }
 
@@ -221,30 +273,24 @@
       background: var(--negro);
       color: var(--gris-medio);
       text-align: center;
-      padding: 22px;
+      padding: 24px;
       font-family: 'DM Sans', sans-serif;
-      font-size: 0.78rem;
+      font-size: 0.85rem;
       letter-spacing: 0.08em;
     }
 
-    footer span { color: var(--rojo); }
+    footer span { color: var(--rojo); font-weight: 500; }
   </style>
 </head>
 <body>
 
-<!-- HEADER / PORTADA -->
 <header>
   <div class="header-top">
-    <!-- Logo SVG de faro -->
     <svg class="logo-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
       <rect width="64" height="64" rx="6" fill="#C0392B"/>
-      <!-- base del faro -->
       <rect x="26" y="44" width="12" height="10" fill="#fff"/>
-      <!-- torre -->
       <polygon points="32,10 25,44 39,44" fill="#fff"/>
-      <!-- linterna -->
       <rect x="27" y="8" width="10" height="6" rx="2" fill="#FFD700"/>
-      <!-- rayos de luz -->
       <line x1="32" y1="11" x2="10" y2="4" stroke="#FFD700" stroke-width="1.5" stroke-opacity="0.7"/>
       <line x1="32" y1="11" x2="54" y2="4" stroke="#FFD700" stroke-width="1.5" stroke-opacity="0.7"/>
       <line x1="32" y1="11" x2="6" y2="18" stroke="#FFD700" stroke-width="1" stroke-opacity="0.5"/>
@@ -256,218 +302,153 @@
   <p class="header-date" id="fecha-hoy"></p>
 </header>
 
-<!-- NAVEGACIÓN -->
 <nav>
   <a href="#" class="active" onclick="mostrar('inicio', this)">Inicio</a>
   <a href="#" onclick="mostrar('deporte', this)">Deporte</a>
   <a href="#" onclick="mostrar('negocios', this)">Negocios</a>
 </nav>
 
-<!-- ════════════════ SECCIÓN INICIO ════════════════ -->
 <section id="inicio" class="visible">
   <h2 class="section-title">Noticias Generales</h2>
 
-  <table>
-    <thead>
-      <tr>
-        <th style="width:30%">Título</th>
-        <th style="width:15%">Categoría</th>
-        <th>Texto del artículo</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <p class="noticia-titulo">Nuevo Plan de Conectividad Digital llega a regiones extremas</p>
-        </td>
-        <td><span class="noticia-categoria">Nacional</span></td>
-        <td class="noticia-texto">
-          El Gobierno anunció hoy la expansión de fibra óptica hacia zonas rurales y localidades
-          aisladas del país. El plan beneficiará a más de 200 comunidades que actualmente no cuentan
-          con acceso a internet de banda ancha, permitiendo el acceso a educación, telemedicina y
-          comercio electrónico. La inversión estimada supera los 180 millones de dólares y se
-          implementará en tres etapas durante los próximos cuatro años.
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p class="noticia-titulo">Temperatura récord en el norte del país: alerta por ola de calor</p>
-        </td>
-        <td><span class="noticia-categoria">Medio Ambiente</span></td>
-        <td class="noticia-texto">
-          La Dirección Meteorológica reportó temperaturas superiores a los 42 °C en la región de
-          Atacama, superando el récord histórico de la zona. Las autoridades emitieron una alerta
-          sanitaria y recomendaron evitar la exposición al sol entre las 11:00 y las 17:00 horas.
-          Organismos de salud pública reforzaron la distribución de agua potable en sectores
-          vulnerables y se habilitaron centros de hidratación en plazas y estadios municipales.
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p class="noticia-titulo">Cumbre Iberoamericana de Educación define agenda 2025-2030</p>
-        </td>
-        <td><span class="noticia-categoria">Internacional</span></td>
-        <td class="noticia-texto">
-          Representantes de 22 países se reunieron en Cartagena de Indias para establecer los
-          lineamientos de la agenda educativa regional para los próximos cinco años. Entre los
-          acuerdos destacan la reducción del abandono escolar, la formación docente en competencias
-          digitales y el fomento de programas bilingües. Chile participó con una delegación del
-          Ministerio de Educación y presentó su modelo de aulas abiertas como caso de buenas
-          prácticas.
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="news-grid">
+    <article class="news-card">
+      <span class="noticia-categoria">Nacional</span>
+      <h3 class="noticia-titulo">Nuevo Plan de Conectividad Digital llega a regiones extremas</h3>
+      <p class="noticia-texto">El Gobierno anunció hoy la expansión de fibra óptica hacia zonas rurales y localidades aisladas del país. El plan beneficiará a más de 200 comunidades que actualmente no cuentan con acceso a internet de banda ancha, permitiendo el acceso a educación, telemedicina y comercio electrónico.</p>
+      
+      <details class="comentarios-section">
+        <summary>💬 Ver comentarios (2)</summary>
+        <div class="comentario-item">
+          <strong>Lector_Conectado:</strong> ¡Por fin! Llevamos años esperando en el sur.
+        </div>
+        <div class="comentario-item">
+          <strong>María Silva:</strong> Ojalá se cumplan los plazos prometidos.
+        </div>
+        <button class="add-comment-btn">+ Añadir comentario</button>
+      </details>
+    </article>
 
-  <!-- VIDEO -->
+    <article class="news-card">
+      <span class="noticia-categoria">Medio Ambiente</span>
+      <h3 class="noticia-titulo">Temperatura récord en el norte del país: alerta por ola de calor</h3>
+      <p class="noticia-texto">La Dirección Meteorológica reportó temperaturas superiores a los 42 °C en la región de Atacama, superando el récord histórico de la zona. Las autoridades emitieron una alerta sanitaria y recomendaron evitar la exposición al sol entre las 11:00 y las 17:00 horas.</p>
+      
+      <details class="comentarios-section">
+        <summary>💬 Ver comentarios (1)</summary>
+        <div class="comentario-item">
+          <strong>EcoWatcher:</strong> El cambio climático es innegable. Hay que tomar medidas urgentes.
+        </div>
+        <button class="add-comment-btn">+ Añadir comentario</button>
+      </details>
+    </article>
+
+    <article class="news-card">
+      <span class="noticia-categoria">Internacional</span>
+      <h3 class="noticia-titulo">Cumbre Iberoamericana de Educación define agenda 2025-2030</h3>
+      <p class="noticia-texto">Representantes de 22 países se reunieron en Cartagena de Indias para establecer los lineamientos de la agenda educativa regional. Entre los acuerdos destacan la reducción del abandono escolar, la formación docente en competencias digitales y el fomento de programas bilingües.</p>
+      
+      <details class="comentarios-section">
+        <summary>💬 Ver comentarios (0)</summary>
+        <div class="comentario-item" style="color: var(--gris-medio); font-style: italic;">
+          Sé el primero en comentar.
+        </div>
+        <button class="add-comment-btn">+ Añadir comentario</button>
+      </details>
+    </article>
+  </div>
+
   <div class="media-block">
-    <h3>📹 Video Destacado — Resumen semanal de noticias</h3>
-
+    <h3>📹 Video Destacado — Resumen semanal</h3>
     <div class="video-shorts-wrapper">
-      <iframe
-        src="https://www.youtube.com/embed/isShcBtlvtA"
-        title="Resumen semanal de noticias"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
+      <iframe src="https://www.youtube.com/embed/isShcBtlvtA" title="Resumen semanal de noticias" allowfullscreen></iframe>
     </div>
   </div>
 
-  <!-- AUDIO -->
   <div class="media-block">
-    <h3>🎙 Audio — Podcast El Faro: análisis de la semana</h3>
-
-    <iframe
-      src="https://open.spotify.com/embed/episode/6wuMo5CHnLDHUpDSR8XBsJ"
-      width="100%"
-      height="152"
-      frameborder="0"
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      loading="lazy"
-      style="border-radius:12px;">
-    </iframe>
+    <h3>🎙 Audio — Podcast El Faro</h3>
+    <iframe src="https://open.spotify.com/embed/episode/6wuMo5CHnLDHUpDSR8XBsJ" width="100%" height="152" frameborder="0" loading="lazy" style="border-radius:12px;"></iframe>
   </div>
 </section>
 
-<!-- ════════════════ SECCIÓN DEPORTE ════════════════ -->
 <section id="deporte">
   <h2 class="section-title">Deporte</h2>
 
-  <table>
-    <thead>
-      <tr>
-        <th style="width:30%">Título</th>
-        <th style="width:15%">Categoría</th>
-        <th>Texto del artículo</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <p class="noticia-titulo">La Roja golea a Bolivia y lidera el grupo en la Copa América Sub-20</p>
-        </td>
-        <td><span class="noticia-categoria">Fútbol</span></td>
-        <td class="noticia-texto">
-          La selección chilena sub-20 derrotó por 3-0 a Bolivia en el estadio Monumental de Buenos
-          Aires, en un partido que demostró el nivel que alcanzó el proceso de Nicolás Córdova.
-          Los goles fueron anotados por Bastián Tapia (11'), Ignacio Mena (58') y Rodrigo Echeverría
-          (82'). Con este resultado, Chile suma 9 puntos en el Grupo B y asegura su clasificación
-          a la fase final del torneo continental.
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p class="noticia-titulo">Kristel Köbrich rompe récord nacional en el Campeonato Panamericano de natación</p>
-        </td>
-        <td><span class="noticia-categoria">Natación</span></td>
-        <td class="noticia-texto">
-          La nadadora chilena Kristel Köbrich estableció una nueva marca nacional en los 800 metros
-          libres durante el Campeonato Panamericano celebrado en Lima. Con un tiempo de 8:25.43,
-          Köbrich superó su propio récord anterior e impresionó al cuerpo técnico de la selección.
-          La deportista, de 39 años, sigue demostrando que la experiencia y la constancia son sus
-          mayores fortalezas camino a los próximos Juegos Olímpicos.
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p class="noticia-titulo">Nicolás Jarry avanza a cuartos de final en el ATP 500 de Barcelona</p>
-        </td>
-        <td><span class="noticia-categoria">Tenis</span></td>
-        <td class="noticia-texto">
-          El tenista chileno Nicolás Jarry venció al español Carlos Alcaraz en tres sets (6-4, 3-6, 7-5)
-          en una de las grandes sorpresas del torneo barcelonés. Jarry, actualmente ubicado en el
-          puesto 25 del ranking ATP, mostró un saque sólido y gran solidez de fondo de cancha.
-          En los cuartos de final se enfrentará al noruego Casper Ruud, segunda semilla del torneo.
-          El partido se disputará el próximo jueves en la cancha central del Real Club de Tenis
-          Barcelona.
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="news-grid">
+    <article class="news-card">
+      <span class="noticia-categoria">Fútbol</span>
+      <h3 class="noticia-titulo">La Roja golea a Bolivia y lidera el grupo en la Copa América Sub-20</h3>
+      <p class="noticia-texto">La selección chilena sub-20 derrotó por 3-0 a Bolivia en el estadio Monumental de Buenos Aires, demostrando un gran nivel. Goles de Tapia, Mena y Echeverría. Con esto, Chile suma 9 puntos y asegura su clasificación a la fase final.</p>
+      <details class="comentarios-section">
+        <summary>💬 Ver comentarios (4)</summary>
+        <div class="comentario-item"><strong>HinchaTotal:</strong> ¡Qué partidazo de los cabros!</div>
+        <button class="add-comment-btn">+ Añadir comentario</button>
+      </details>
+    </article>
+
+    <article class="news-card">
+      <span class="noticia-categoria">Natación</span>
+      <h3 class="noticia-titulo">Kristel Köbrich rompe récord nacional en el Campeonato Panamericano</h3>
+      <p class="noticia-texto">La nadadora estableció una nueva marca nacional en los 800 metros libres. Con 8:25.43, Köbrich superó su propio récord, demostrando que su experiencia sigue siendo su mayor fortaleza camino a los Juegos Olímpicos.</p>
+      <details class="comentarios-section">
+        <summary>💬 Ver comentarios (1)</summary>
+        <div class="comentario-item"><strong>FanDeportes:</strong> Una leyenda viviente del deporte nacional.</div>
+        <button class="add-comment-btn">+ Añadir comentario</button>
+      </details>
+    </article>
+
+    <article class="news-card">
+      <span class="noticia-categoria">Tenis</span>
+      <h3 class="noticia-titulo">Nicolás Jarry avanza a cuartos de final en el ATP 500 de Barcelona</h3>
+      <p class="noticia-texto">El tenista chileno venció al español Carlos Alcaraz en tres sets (6-4, 3-6, 7-5) en una de las grandes sorpresas del torneo. En cuartos de final se enfrentará al noruego Casper Ruud en la cancha central.</p>
+      <details class="comentarios-section">
+        <summary>💬 Ver comentarios (0)</summary>
+        <button class="add-comment-btn">+ Añadir comentario</button>
+      </details>
+    </article>
+  </div>
 </section>
 
-<!-- ════════════════ SECCIÓN NEGOCIOS ════════════════ -->
 <section id="negocios">
-  <h2 class="section-title">Negocios &amp; Emprendimiento</h2>
+  <h2 class="section-title">Negocios & Emprendimiento</h2>
 
-  <table>
-    <thead>
-      <tr>
-        <th style="width:30%">Título</th>
-        <th style="width:15%">Categoría</th>
-        <th>Texto del artículo</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <p class="noticia-titulo">Startup chilena de energía solar recauda US$12 millones en ronda Serie A</p>
-        </td>
-        <td><span class="noticia-categoria">Emprendimiento</span></td>
-        <td class="noticia-texto">
-          SolarChile, empresa fundada en Concepción en 2021, cerró exitosamente su ronda de
-          financiamiento Serie A con una inversión de 12 millones de dólares liderada por fondos
-          de capital de riesgo de Brasil y España. La compañía desarrolla paneles solares de bajo
-          costo diseñados para comunidades rurales sin acceso a la red eléctrica. Con este capital,
-          planea expandir operaciones a Perú, Bolivia y Ecuador durante el próximo año, generando
-          más de 200 empleos directos en la región.
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p class="noticia-titulo">Retail nacional acelera su transformación digital con inteligencia artificial</p>
-        </td>
-        <td><span class="noticia-categoria">Tecnología</span></td>
-        <td class="noticia-texto">
-          Las principales cadenas de supermercados y tiendas por departamento del país están
-          implementando sistemas de IA para optimizar inventarios, personalizar ofertas y reducir
-          mermas. Según un informe de la Cámara de Comercio de Santiago, el 68% de las empresas
-          retail con más de 100 empleados ya cuenta con algún piloto de automatización inteligente.
-          Los expertos proyectan que esta tendencia generará un ahorro operacional promedio del 18%
-          en los próximos tres años.
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p class="noticia-titulo">Exportaciones de vino chileno crecen 14% en el primer trimestre del año</p>
-        </td>
-        <td><span class="noticia-categoria">Exportaciones</span></td>
-        <td class="noticia-texto">
-          Según cifras de Wines of Chile, las exportaciones del sector vitivinícola crecieron un 14%
-          en valor durante el primer trimestre, impulsadas principalmente por la demanda de Estados
-          Unidos, China y Alemania. Los vinos premium y ultrapremium lideraron el crecimiento,
-          reflejando un cambio en la estrategia de las viñas hacia segmentos de mayor valor agregado.
-          El Valle Central y la región del Maule concentran el 70% del volumen exportado,
-          consolidando a Chile como el quinto mayor exportador de vino del mundo.
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="news-grid">
+    <article class="news-card">
+      <span class="noticia-categoria">Emprendimiento</span>
+      <h3 class="noticia-titulo">Startup chilena de energía solar recauda US$12 millones en Serie A</h3>
+      <p class="noticia-texto">SolarChile, empresa de Concepción, cerró su ronda de financiamiento liderada por fondos de Brasil y España. Desarrollan paneles solares de bajo costo para comunidades rurales y planean expandirse a Perú, Bolivia y Ecuador.</p>
+      <details class="comentarios-section">
+        <summary>💬 Ver comentarios (2)</summary>
+        <div class="comentario-item"><strong>Inversor_X:</strong> Excelente modelo de negocio, escalable y con propósito.</div>
+        <button class="add-comment-btn">+ Añadir comentario</button>
+      </details>
+    </article>
+
+    <article class="news-card">
+      <span class="noticia-categoria">Tecnología</span>
+      <h3 class="noticia-titulo">Retail nacional acelera su transformación digital con inteligencia artificial</h3>
+      <p class="noticia-texto">Las cadenas de supermercados están implementando IA para optimizar inventarios y personalizar ofertas. El 68% de las empresas retail ya cuenta con pilotos de automatización que generarán un ahorro operacional del 18%.</p>
+      <details class="comentarios-section">
+        <summary>💬 Ver comentarios (0)</summary>
+        <button class="add-comment-btn">+ Añadir comentario</button>
+      </details>
+    </article>
+
+    <article class="news-card">
+      <span class="noticia-categoria">Exportaciones</span>
+      <h3 class="noticia-titulo">Exportaciones de vino chileno crecen 14% en el primer trimestre</h3>
+      <p class="noticia-texto">Impulsadas por EE.UU., China y Alemania, las exportaciones crecieron en valor. Los vinos premium lideraron este crecimiento, consolidando a Chile como el quinto mayor exportador de vino del mundo.</p>
+      <details class="comentarios-section">
+        <summary>💬 Ver comentarios (1)</summary>
+        <div class="comentario-item"><strong>Somo_Vino:</strong> Orgullo nacional. La calidad en el Maule está altísima.</div>
+        <button class="add-comment-btn">+ Añadir comentario</button>
+      </details>
+    </article>
+  </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  &copy; 2025 <span>El Faro</span> &mdash; Todos los derechos reservados &mdash; Periódico Digital
+  © 2025 <span>El Faro</span> — Todos los derechos reservados — Periódico Digital
 </footer>
 
 <script>
